@@ -11,21 +11,27 @@ import seedu.address.logic.commands.AddProductCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.contacts.AddContactCommand;
 import seedu.address.logic.commands.contacts.DeleteContactCommand;
 import seedu.address.logic.commands.contacts.EditContactCommand;
+import seedu.address.logic.commands.contacts.FindContactCommand;
 import seedu.address.logic.commands.contacts.LinkContactCommand;
 import seedu.address.logic.commands.contacts.ListContactCommand;
+import seedu.address.logic.commands.jobs.AddJobCommand;
+import seedu.address.logic.commands.jobs.DeleteJobCommand;
+import seedu.address.logic.commands.jobs.ListJobCommand;
 import seedu.address.logic.commands.mails.AddTemplateCommand;
 import seedu.address.logic.commands.mails.DeleteTemplateCommand;
 import seedu.address.logic.commands.mails.ListTemplateCommand;
 import seedu.address.logic.parser.contacts.AddContactCommandParser;
 import seedu.address.logic.parser.contacts.DeleteContactCommandParser;
 import seedu.address.logic.parser.contacts.EditContactCommandParser;
+import seedu.address.logic.parser.contacts.FindContactCommandParser;
 import seedu.address.logic.parser.contacts.LinkContactCommandParser;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.logic.parser.jobs.AddJobCommandParser;
+import seedu.address.logic.parser.jobs.DeleteJobCommandParser;
 import seedu.address.logic.parser.mails.AddTemplateCommandParser;
 import seedu.address.logic.parser.mails.DeleteTemplateCommandParser;
 
@@ -71,8 +77,8 @@ public class MyCrmParser {
         case ClearCommand.COMMAND_WORD:
             return new ClearCommand();
 
-        case FindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+        case FindContactCommand.COMMAND_WORD:
+            return new FindContactCommandParser().parse(arguments);
 
         case LinkContactCommand.COMMAND_WORD:
             return new LinkContactCommandParser().parse(arguments);
@@ -94,6 +100,15 @@ public class MyCrmParser {
 
         case AddProductCommand.COMMAND_WORD:
             return new AddProductCommandParser().parse(arguments);
+
+        case AddJobCommand.COMMAND_WORD:
+            return new AddJobCommandParser().parse(arguments);
+
+        case ListJobCommand.COMMAND_WORD:
+            return new ListJobCommand();
+
+        case DeleteJobCommand.COMMAND_WORD:
+            return new DeleteJobCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
