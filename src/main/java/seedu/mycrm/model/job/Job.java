@@ -35,7 +35,7 @@ public class Job {
                JobStatus jobStatus, JobDate receivedDate, JobDate completedDate, JobFee fee) {
         this.jobDescription = jobDescription;
         this.client = client;
-        this.product = product;
+        this.setProduct(product);
         this.deliveryDate = deliveryDate;
         this.jobStatus = jobStatus;
         this.receivedDate = receivedDate;
@@ -55,7 +55,7 @@ public class Job {
                JobDate receivedDate, JobFee fee) {
         this.jobDescription = jobDescription;
         this.client = null;
-        this.product = null;
+        this.setProduct(null);
         this.deliveryDate = deliveryDate;
         this.jobStatus = new JobStatus(false);
         this.receivedDate = receivedDate;
@@ -79,7 +79,19 @@ public class Job {
         return product;
     }
 
+    /**
+     * Set product related to this job. Update this job's links within products.
+     * @param product
+     */
     public void setProduct(Product product) {
+        if (this.product != null) {
+            this.product.unlinkJob(this);
+        }
+
+        if (product != null) {
+            product.linkJob(this);
+        }
+        
         this.product = product;
     }
 

@@ -22,6 +22,7 @@ import seedu.mycrm.model.products.Product;
 import seedu.mycrm.model.products.ProductComponent;
 import seedu.mycrm.model.products.ProductName;
 import seedu.mycrm.model.products.Type;
+import seedu.mycrm.model.util.JobList;
 
 public class EditProductCommand extends Command {
 
@@ -73,8 +74,13 @@ public class EditProductCommand extends Command {
             throw new CommandException(MESSAGE_DUPLICATE_PRODUCT);
         }
 
+        // update product list
         model.setProduct(toEdit, edited);
         model.updateFilteredProductList(Model.PREDICATE_SHOW_ALL_PRODUCTS);
+
+        // update linked jobs
+        edited.updateLinkedJobs();
+        model.updateFilteredJobList(Model.PREDICATE_SHOW_ALL_INCOMPLETE_JOBS);
 
         return new CommandResult(String.format(MESSAGE_EDIT_PRODUCT_SUCCESS, edited), COMMAND_TYPE);
     }
@@ -92,8 +98,9 @@ public class EditProductCommand extends Command {
         Manufacturer manufacturer = descriptor.manufacturer.isEmpty() ? toEdit.getManufacturer()
                 : descriptor.manufacturer;
         Description description = descriptor.description.isEmpty() ? toEdit.getDescription() : descriptor.description;
+        JobList linkedJobs = toEdit.getLinkedJobs();
 
-        return new Product(name, type, manufacturer, description);
+        return new Product(name, type, manufacturer, description, linkedJobs);
     }
 
     @Override
